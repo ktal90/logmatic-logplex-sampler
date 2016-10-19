@@ -1,5 +1,7 @@
 require 'sinatra'
 
-get '/' do
-  "Hello, world"
+post '/' do
+  puts "eldjzlj"
+  puts "I got #{params[:command]}."
 end
+
