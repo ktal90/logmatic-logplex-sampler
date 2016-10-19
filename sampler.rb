@@ -1,23 +1,9 @@
 require 'sinatra'
-require 'logger'
+
 call_number = 0
 scale_factor = 1000
 
-
-
-
 post '/sampler/:rate/:token' do
-
-
-
-  configure do
-    LOG = Logger.new(STDOUT)
-    LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
-
-    LOG.info 'I am logging something.'
-  end
-
-  redirect "http://requestb.in/14pfqnj1?/#{params['token']}?#{request.query_string}", 307
 
   sample_rate = 100 / params["rate"].to_i
   sample_rate = 1 if sample_rate < 0 || sample_rate > 100
@@ -28,8 +14,18 @@ post '/sampler/:rate/:token' do
   call_number += 1
   call_number = 0 if call_number == scale_factor
   if (scale_factor * call_number % sample_rate == 0)
-    redirect "http://requestb.in/14pfqnj1?/#{params['token']}?#{request.query_string}", 307
-    #redirect "https://api.logmatic.io/v1/input/#{params['token']}?#{request.query_string}", 307
+
+    # config
+    uri = URI.parse("https://api.logmatic.io/v1/input")
+
+    # Create the HTTP objects
+    proxy_http = Net::HTTP.new(uri.host, uri.port)
+    proxy_http.use_ssl = true
+    proxy_request = Net::HTTP::Post.new("#{uri.path}/#{params['token']}?#{request.query_string}", {"Content-Type" => "text/plain"})
+
+    proxy_request.body = request.body.read
+    res = proxy_http.request(proxy_request)
+    return res.read_body
   else
     return "{\"ok\": \"dropped\"}"
   end
