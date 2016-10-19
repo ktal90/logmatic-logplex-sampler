@@ -1,35 +1,20 @@
 require 'sinatra'
-require 'net/http'
-require 'uri'
-require 'json'
 
-
+call_number = 0
+scale_factor = 1000
 post '/sampler/:rate/:token' do
-  # config
-  uri = URI.parse("https://api.logmatic.io/v1/input")
-=begin
 
+  sample_rate = (100 / params["rate"].to_i)
+  sample_rate = 1 if sample_rate < 0 || sample_rate > 100
 
-  # Create the HTTP objects
-  proxy_http = Net::HTTP.new(uri.host, uri.port)
-  proxy_http.use_ssl = true
-  proxy_request = Net::HTTP::Post.new("#{uri.path}/#{params['token']}?#{request.query_string}", {'Content-Type' => 'application/json'})
+  # to be more precise scale the rate
+  sample_rate = (sample_rate * scale_factor).to_i
 
-  lines = []
-  request.body.each do |line|
-    lines.push(line)
+  call_number += 1
+  call_number = 0 if call_number == scale_factor
+  if (scale_factor * call_number % sample_rate == 0)
+    redirect "https://api.logmatic.io/v1/input/#{params['token']}?#{request.query_string}", 307
+  else
+    return "{\"ok\": \"dropped\"}"
   end
-
-  # Do the sampling
-  nb_samples = [(lines.length * params["rate"].to_i / 100).to_i, 1].max
-  sampled = lines.sample(nb_samples)
-  proxy_request.body = sampled.to_json
-
-  # Send the request to Logmatic.io
-  proxy_http.request(proxy_request)
-
-  "#{nb_samples}:  #{sampled.to_json} " #"// #{proxy_response}"
-=end
-  #redirect "#{uri.path}/#{params['token']}?#{request.query_string}", 307
-  "#{uri.path}/#{params['token']}?#{request.query_string}"
 end
