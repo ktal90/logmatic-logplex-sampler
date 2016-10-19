@@ -5,16 +5,17 @@ scale_factor = 1000
 
 
 
-configure do
-  LOG = Logger.new(STDOUT)
-  LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
-
-  LOG.info 'I am logging something.'
-end
 
 post '/sampler/:rate/:token' do
 
 
+
+  configure do
+    LOG = Logger.new(STDOUT)
+    LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
+
+    LOG.info 'I am logging something.'
+  end
 
   redirect "http://requestb.in/14pfqnj1?/#{params['token']}?#{request.query_string}", 307
 
