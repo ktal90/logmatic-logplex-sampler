@@ -1,7 +1,17 @@
 require 'sinatra'
-
+require 'logger'
 call_number = 0
 scale_factor = 1000
+
+
+
+configure do
+  LOG = Logger.new(STDOUT)
+  LOG.level = Logger.const_get ENV['LOG_LEVEL'] || 'DEBUG'
+
+  LOG.info 'I am logging something.'
+end
+
 post '/sampler/:rate/:token' do
 
 
