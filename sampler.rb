@@ -4,12 +4,11 @@ require 'uri'
 require 'json'
 
 
-socket = TCPSocket.new 'api.logmatic.io', 10514
-
 post '/sampler/:rate/:token' do
-
   # config
   uri = URI.parse("https://api.logmatic.io/v1/input")
+=begin
+
 
   # Create the HTTP objects
   proxy_http = Net::HTTP.new(uri.host, uri.port)
@@ -30,4 +29,7 @@ post '/sampler/:rate/:token' do
   proxy_http.request(proxy_request)
 
   "#{nb_samples}:  #{sampled.to_json} " #"// #{proxy_response}"
+=end
+  #redirect "#{uri.path}/#{params['token']}?#{request.query_string}", 307
+  "#{uri.path}/#{params['token']}?#{request.query_string}"
 end
