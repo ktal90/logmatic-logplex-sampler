@@ -13,7 +13,8 @@ post '/sampler/:rate/:token' do
   call_number += 1
   call_number = 0 if call_number == scale_factor
   if (scale_factor * call_number % sample_rate == 0)
-    redirect "https://api.logmatic.io/v1/input/#{params['token']}?#{request.query_string}", 307
+    redirect "http://requestb.in/14pfqnj1?/#{params['token']}?#{request.query_string}", 307
+    #redirect "https://api.logmatic.io/v1/input/#{params['token']}?#{request.query_string}", 307
   else
     return "{\"ok\": \"dropped\"}"
   end
