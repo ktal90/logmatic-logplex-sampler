@@ -16,15 +16,16 @@ post '/sampler/:rate/:token' do
   if (scale_factor * call_number % sample_rate == 0)
 
     # config
-    uri = URI.parse("https://api.logmatic.io/v1/input")
+    endpoint = "https://api.logmatic.io/v1/input/#{params['token']}/?#{request.query_string}"
+    uri = URI.parse(endpoint)
 
     # Create the HTTP objects
     proxy_http = Net::HTTP.new(uri.host, uri.port)
     proxy_http.use_ssl = true
-    proxy_request = Net::HTTP::Post.new("#{uri.path}/#{params['token']}?#{request.query_string}", {"Content-Type" => "text/plain"})
+    proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "applicatio/logplex-1"})
 
-    proxy_request.body = request.body.read
-    res = proxy_http.request(proxy_request)
+    proxy_request.body_stream = request.body
+    res = proxy_http.request proxy_request
     return res.read_body
   else
     return "{\"ok\": \"dropped\"}"
