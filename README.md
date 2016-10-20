@@ -27,6 +27,7 @@ git push heroku master
 ```
 
 Or directly:
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/logmatic/logmatic-sampler)
 
 ## Support
