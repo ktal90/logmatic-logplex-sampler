@@ -26,6 +26,7 @@ post '/sampler/:rate/:token' do
       proxy_http.use_ssl = true
       proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "application/logplex-1"})
 
+
       proxy_request.body = request.body.read
       proxy_http.request proxy_request
 
