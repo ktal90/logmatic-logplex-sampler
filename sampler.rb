@@ -1,24 +1,25 @@
 require 'sinatra'
 require 'thread'
 
+# Global variables
 call_number = 0
 scale_factor = 1000
 
 post '/sampler/:rate/:token' do
 
-  time = Time.now.getutc
-
+  # Sample rate (1 to 100)
   sample_rate = 100 / params["rate"].to_i
-  sample_rate = 1 if sample_rate < 0 || sample_rate > 100
+  sample_rate = 100 if sample_rate < 0 || sample_rate > 100
 
-  # to be more precise scale the rate
+  # Need to scale to be more exact
   sample_rate = (sample_rate * scale_factor).to_i
 
   call_number += 1
   call_number = 0 if call_number == scale_factor
+  # We use the modulo to do the sampling
   if (scale_factor * call_number % sample_rate == 0)
 
-    # config
+    # Logmatic.io's config
     endpoint = "https://api.logmatic.io/v1/input/#{params['token']}/?#{request.query_string}"
     uri = URI.parse(endpoint)
 
@@ -27,7 +28,7 @@ post '/sampler/:rate/:token' do
     proxy_http.use_ssl = true
     proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "application/logplex-1"})
 
-
+    # Forward it to Logmatic.io
     proxy_request.body = request.body.read
     proxy_http.request proxy_request
   end
