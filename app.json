@@ -1,6 +1,6 @@
 
 {
-  "name": "Logmatic.io heroku logplex sampler",
+  "name": "Logmatic.io logplex sampler",
   "description": "A simple ruby app that samples and forwards incoming events to Logmatic.io",
   "website": "https://logmatic.io",
   "repository": "https://github.com/logmatic/logmatic-logplex-sampler",
