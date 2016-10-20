@@ -1,0 +1,14 @@
+
+{
+  "name": "Logmatic.io heroku sampler",
+  "description": "A simple ruby app that samples and forwards incoming events to Logmatic.io",
+  "website": "https://logmatic.io",
+  "repository": "https://github.com/logmatic/logmatic-sampler",
+  "logo": "http://logmatic.io/wp-content/uploads/2016/02/Logmatic-io-Logo.png",
+  "keywords": [
+    "Logmatic.io",
+    "heroku",
+    "sampler",
+    "logplex-1"
+  ]
+}
