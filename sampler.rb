@@ -5,6 +5,7 @@ scale_factor = 1000
 
 post '/sampler/:rate/:token' do
 
+
   sample_rate = 100 / params["rate"].to_i
   sample_rate = 1 if sample_rate < 0 || sample_rate > 100
 
@@ -22,7 +23,7 @@ post '/sampler/:rate/:token' do
     # Create the HTTP objects
     proxy_http = Net::HTTP.new(uri.host, uri.port)
     proxy_http.use_ssl = true
-    proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "applicatio/logplex-1"})
+    proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "application/logplex-1"})
 
     proxy_request.body = request.body.read
     res = proxy_http.request proxy_request
