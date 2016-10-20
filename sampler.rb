@@ -17,8 +17,6 @@ post '/sampler/:rate/:token' do
   call_number = 0 if call_number == scale_factor
   if (scale_factor * call_number % sample_rate == 0)
 
-    Thread.new {
-
       # config
       endpoint = "https://api.logmatic.io/v1/input/#{params['token']}/?#{request.query_string}"
       uri = URI.parse(endpoint)
@@ -30,8 +28,6 @@ post '/sampler/:rate/:token' do
 
       proxy_request.body = request.body.read
       proxy_http.request proxy_request
-
-    }
 
   end
 end
