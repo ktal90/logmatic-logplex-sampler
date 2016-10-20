@@ -7,7 +7,7 @@ scale_factor = 1000
 post '/sampler/:rate/:token' do
 
   time = Time.now.getutc
-  puts time + " received call"
+  puts time.to_s + " received call"
 
   sample_rate = 100 / params["rate"].to_i
   sample_rate = 1 if sample_rate < 0 || sample_rate > 100
@@ -30,8 +30,8 @@ post '/sampler/:rate/:token' do
 
       proxy_request.body = request.body.read
       proxy_http.request proxy_request
-      puts time + " pushed"
+      puts time.to_s + " pushed"
   else
-      puts time + " dropped"
+      puts time.to_s + " dropped"
   end
 end
