@@ -27,7 +27,6 @@ post '/sampler/:rate/:token' do
 
     proxy_request.body = request.body.read
     res = proxy_http.request proxy_request
-    puts "njqdkjkjhdjkshdkjhdjkqhjkdhkj"
     return res.read_body
   end
 end
