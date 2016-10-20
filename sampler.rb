@@ -6,6 +6,8 @@ scale_factor = 1000
 
 get "/loaderio-61161d1f086423cc02a6cbb28bd9a2e5" do
   File.read('loaderio-61161d1f086423cc02a6cbb28bd9a2e5.txt')
+endget "/loaderio-61161d1f086423cc02a6cbb28bd9a2e5/" do
+  File.read('loaderio-61161d1f086423cc02a6cbb28bd9a2e5.txt')
 end
 
 
