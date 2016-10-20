@@ -4,18 +4,9 @@ require 'thread'
 call_number = 0
 scale_factor = 1000
 
-get "/loaderio-61161d1f086423cc02a6cbb28bd9a2e5" do
-  File.read('loaderio-61161d1f086423cc02a6cbb28bd9a2e5.txt')
-end
-get "/loaderio-61161d1f086423cc02a6cbb28bd9a2e5/" do
-  File.read('loaderio-61161d1f086423cc02a6cbb28bd9a2e5.txt')
-end
-
-
 post '/sampler/:rate/:token' do
 
   time = Time.now.getutc
-  puts time.to_s + " received call"
 
   sample_rate = 100 / params["rate"].to_i
   sample_rate = 1 if sample_rate < 0 || sample_rate > 100
@@ -39,8 +30,5 @@ post '/sampler/:rate/:token' do
 
     proxy_request.body = request.body.read
     proxy_http.request proxy_request
-    puts time.to_s + " pushed"
-  else
-    puts time.to_s + " dropped"
   end
 end
