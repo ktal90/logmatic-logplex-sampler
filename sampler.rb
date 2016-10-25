@@ -30,7 +30,7 @@ post '/sampler/:rate/:token' do
 
     # Forward it to Logmatic.io
     r = proxy_request.body = request.body.read.strip
-    puts "#{r.code}: #{r.message} (#{r.read_body]})"
+    puts "#{r.code}: #{r.message} (#{r.read_body})"
     puts "Send to Logmatic: #{proxy_request.body}"
   else
     puts "Dropped"
