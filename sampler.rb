@@ -30,6 +30,12 @@ post '/sampler/:rate/:token' do
 
     # Forward it to Logmatic.io
     proxy_request.body = request.body.read
-    proxy_http.request proxy_request
+    if proxy_request.body.length > 0
+      proxy_http.request proxy_request
+    else
+      puts "Skipped due to empty body"
+    end
+  else
+    puts "Dropped"
   end
 end
