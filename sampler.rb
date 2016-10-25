@@ -29,12 +29,8 @@ post '/sampler/:rate/:token' do
     proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "text/plain"})
 
     # Forward it to Logmatic.io
-    proxy_request.body = request.body.read
-    if proxy_request.body.length > 0
-      proxy_http.request proxy_request
-    else
-      puts "Skipped due to empty body"
-    end
+    proxy_request.body = request.body.read.strip
+    puts "Send to Logmatic: #{proxy_request.body}"
   else
     puts "Dropped"
   end
