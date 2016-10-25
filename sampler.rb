@@ -29,7 +29,8 @@ post '/sampler/:rate/:token' do
     proxy_request = Net::HTTP::Post.new(endpoint, {"Content-Type" => "text/plain"})
 
     # Forward it to Logmatic.io
-    r = proxy_request.body = request.body.read.strip
+    proxy_request.body = request.body.read.strip
+    r = proxy_http.request proxy_request
     puts "#{r.code}: #{r.message} (#{r.read_body})"
     puts "Send to Logmatic: #{proxy_request.body}"
   else
