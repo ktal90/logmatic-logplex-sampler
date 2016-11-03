@@ -19,7 +19,7 @@ Or directly:
 Once the app is deployed, you only need to setup a drain as follow:
 
 ```sh
-heroku drains:add https://<your-logmatic-sampler>.herokuapp/<rate>/<your-api-key>
+heroku drains:add https://<your-logmatic-sampler>.herokuapp.com/sampler/<rate>/<your-api-key>
 ```
 
  * `<your-logmatic-sampler>` is your instance of logmatic-sampler
