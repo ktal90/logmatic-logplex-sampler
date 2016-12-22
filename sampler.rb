@@ -5,6 +5,11 @@ require 'thread'
 call_number = 0
 scale_factor = 1000
 
+# Healthcheck endpoint
+get '/healthcheck' do
+  200
+end
+
 post '/sampler/:rate/:token' do
 
   # Sample rate (1 to 100)
